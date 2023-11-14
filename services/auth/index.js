@@ -5,6 +5,7 @@ const {
   getUserByEmail,
   createUserService,
 } = require('../users');
+require('dotenv').config();
 
 const generateToken = (payload) => {
   const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
@@ -28,14 +29,17 @@ const refreshTokenService = async (token) => {
 
 const loginService = async (email, password) => {
   const userData = await getUserByEmail(email);
+  if (!userData) {
+    throw new CustomError('Wrong email/password', 400);
+  }
   const validPassword = await bcrypt.compare(
     password,
     userData.password,
-  );
-
-  if (!validPassword) {
-    throw new CustomError('password is incorrect', 400);
-  }
+    );
+    
+    if (!validPassword) {
+      throw new CustomError('Wrong email/password', 400);
+    }
   return generateToken({
     id: userData.id,
     email: userData.email,
@@ -44,6 +48,10 @@ const loginService = async (email, password) => {
 
 const registerService = async (email, password) => {
   try {
+    const userData = await getUserByEmail(email);
+    if (userData) {
+      throw new CustomError('Email already exists', 400);
+    }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const user = await createUserService({

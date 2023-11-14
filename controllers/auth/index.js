@@ -1,26 +1,26 @@
 const { loginService, refreshTokenService, registerService } = require('../../services/auth');
 
-const loginController = async (req, res) => {
+const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const token = await loginService(email, password);
     res.json(token);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 
-const registerController = async (req, res) => {
+const registerController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const token = await registerService(email, password);
-    res.json(token);
+    res.status(201).json(token);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 
-const refreshTokenController = async (req, res) => {
+const refreshTokenController = async (req, res, next) => {
   try {
     const { token } = req.body;
     const refreshToken = await refreshTokenService(token);
@@ -29,7 +29,7 @@ const refreshTokenController = async (req, res) => {
     }
     res.json(refreshToken);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 

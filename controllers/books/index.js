@@ -2,39 +2,39 @@ const {
   getBooksServive, createBookService, updateBookService, deleteBookService,
 } = require('../../services/books');
 
-const getBooksController = async (req, res) => {
+const getBooksController = async (req, res, next) => {
   try {
     const books = await getBooksServive();
     res.json(books);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 
-const createBookController = async (req, res) => {
+const createBookController = async (req, res, next) => {
   try {
     const book = await createBookService(req.body);
-    res.json(book);
+    res.status(201).json(book);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 
-const updateBookController = async (req, res) => {
+const updateBookController = async (req, res, next) => {
   try {
     const book = await updateBookService(req.params.id, req.body);
     res.json(book);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 
-const deleteBookController = async (req, res) => {
+const deleteBookController = async (req, res, next) => {
   try {
     const book = await deleteBookService(req.params.id);
     res.json(book);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error)
   }
 };
 

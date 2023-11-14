@@ -32,6 +32,15 @@ const createBookService = async (book) => {
 
 const updateBookService = async (id, book) => {
   try {
+    const bookData = await Book.findOne({
+      where: { id },
+      attributes: [
+        'id',
+      ],
+    });
+    if (!bookData) {
+      throw new CustomError('Book not found', 404);
+    }
     const updatedBook = await Book.update(book, {
       where: { id },
       returning: true,
@@ -44,6 +53,15 @@ const updateBookService = async (id, book) => {
 
 const deleteBookService = async (id) => {
   try {
+    const bookData = await Book.findOne({
+      where: { id },
+      attributes: [
+        'id',
+      ],
+    });
+    if (!bookData) {
+      throw new CustomError('Book not found', 404);
+    }
     return await Book.destroy({
       where: { id },
     });
