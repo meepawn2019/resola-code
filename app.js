@@ -22,7 +22,9 @@ app.use((req, res, next) => {
 });
 
 const specs = swaggerJSDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+}
 
 app.options('*', (req, res) => {
   res.sendStatus(200);
