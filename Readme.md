@@ -52,3 +52,5 @@ yarn test
 #### API documentation
 You can find documentation about the API on `localhost:3000/api-docs` when start development server or through [this link](https://resola-code.onrender.com/api-docs)
 
+#### CI/CD process
+This project using Github Actions for automation deployment. You could check the process through [this file](./.github/workflows/ci.yaml)
