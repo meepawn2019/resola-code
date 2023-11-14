@@ -67,4 +67,4 @@ const registerService = async (email, password) => {
   }
 };
 
-module.exports = { loginService, refreshTokenService, registerService };
+module.exports = { loginService, refreshTokenService, registerService, generateToken };

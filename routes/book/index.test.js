@@ -29,10 +29,10 @@ const mockUpdateBookDB = [
   ]
 ]
 
-const mockAuthenResponse = {
-  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJ0ZXN0MTJAZ21haWwuY29tIiwiaWF0IjoxNjk5OTQ3MDA2LCJleHAiOjE3MDAwMzM0MDZ9.40DpKdP1uC8w6J19smlumoWuCkIuzFARVj89mR12e1U',
-  refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJ0ZXN0MTJAZ21haWwuY29tIiwiaWF0IjoxNjk5OTQ3MDA2fQ.THjefxC_IYmH_vmeb8jvVO3NvQocNrfKooZklUrA5Xo'
-}
+const mockAuthenResponse = generateToken({
+  id: 1,
+  email: 'test1@gmail.com',
+})
 
 describe('Test the book path', () => {
   afterEach(() => {
