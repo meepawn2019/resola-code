@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
 const Book = require('../../models/book');
+const { generateToken } = require('../../services/auth');
 
 const mockBookDB = {
   dataValues: {
