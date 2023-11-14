@@ -4,7 +4,8 @@ const {
 
 const getBooksController = async (req, res, next) => {
   try {
-    const books = await getBooksServive();
+    const query = req.query;
+    const books = await getBooksServive(query);
     res.json(books);
   } catch (error) {
     next(error)

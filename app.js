@@ -5,6 +5,7 @@ const routes = require('./routes');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerOptions = require('./swagger');
+const rateLimitHandler = require('./middlewares/rateLimitMiddleware');
 const app = express();
 
 app.use((req, res, next) => {
@@ -26,6 +27,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true })
 app.options('*', (req, res) => {
   res.sendStatus(200);
 });
+
+app.use(rateLimitHandler)
 
 app.use(bodyParser.json());
 app.use(

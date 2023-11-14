@@ -1,8 +1,27 @@
 const CustomError = require('../../error');
 const Book = require('../../models/book');
 
-const getBooksServive = async () => {
+const getBooksServive = async (filter) => {
   try {
+    if (filter) {
+      // Convert string query to object
+      const searchParams = new URLSearchParams(filter);
+      const query = Object.fromEntries(searchParams.entries());
+      const books = await Book.findAll({
+        where: query,
+        attributes: [
+          'id',
+          'title',
+          'author',
+          'publish_date',
+          'isbn',
+          'price',
+          'createdAt',
+          'updatedAt',
+        ],
+      });
+      return books.map((book) => book.dataValues);
+    }
     const books = await Book.findAll({
       attributes: [
         'id',
